@@ -41,11 +41,20 @@ b1.fill = red2green
 设置单元格对齐
 """
 from openpyxl.styles import Alignment
-ws.merge_cells("D5:D6")
+ws.merge_cells("D5:D6")#合并单元格
 ws["D5"].value = "那是相当牛逼"
 center_alignment = Alignment(horizontal="center",vertical="center")
 ws["D5"].alignment = center_alignment
 
-
+"""
+命名样式
+"""
+from openpyxl.styles import NamedStyle
+highlight = NamedStyle(name="highlight")
+highlight.font = Font(bold=True,size=20,name="微软雅黑",strike=True)
+highlight.alignment = Alignment(horizontal="center",vertical="center")
+wb.add_named_style(highlight)
+ws["D10"].style = highlight
+ws["D10"].value = "爱你哟"
 
 wb.save(r"C:\Users\Admin\Desktop\111.xlsx")
