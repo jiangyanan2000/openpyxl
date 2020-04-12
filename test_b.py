@@ -3,6 +3,8 @@ import os
 import os.path
 import win32com.client as win32
 import openpyxl
+from openpyxl.styles import Alignment
+center_alignment = Alignment(horizontal="center",vertical="center")
 rootdir = input("输入文件夹路径：")
 for parent,dirnames,filenames in os.walk(rootdir):
     # print(parent,dirnames,filenames)
@@ -27,6 +29,7 @@ for parent_new,dirnames_new,filenames_new in os.walk(rootdir):
         wb = openpyxl.load_workbook(filedir_new)
         ws = wb["支部数据"]
         ws["K1"] = "激活学员"
+        ws["K1"].alignment = center_alignment
         maxrow = ws.max_row
         for each_rows in ws.rows:
             for each_row in each_rows:
@@ -40,9 +43,11 @@ for parent_new,dirnames_new,filenames_new in os.walk(rootdir):
                     each_row.value = float(each_row.value)
             for rows in ws.iter_rows(min_col=3,min_row=2,max_col=11,max_row= maxrow):
                 ws[rows[8].coordinate] = f"=SUM({rows[1].coordinate}:{rows[2].coordinate})"
+                ws[rows[8].coordinate].alignment = center_alignment
             for cols in ws.iter_cols(min_col=3,min_row=2,max_col=11,max_row = (maxrow+1)):
                 # print(cols)
                 ws[cols[(maxrow-1)].coordinate] = f"=SUM({cols[0].coordinate}:{cols[(maxrow-2)].coordinate})"
+                ws[cols[(maxrow - 1)].coordinate].alignment = center_alignment
 
 
             # each_row.number_format = "FORMAT_GENERAL"
