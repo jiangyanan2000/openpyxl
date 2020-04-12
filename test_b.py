@@ -3,7 +3,7 @@ import os
 import os.path
 import win32com.client as win32
 import openpyxl
-rootdir = r"C:\Users\jdbscwmsjs\Desktop\1"
+rootdir = input("输入文件夹路径："end=)
 for parent,dirnames,filenames in os.walk(rootdir):
     # print(parent,dirnames,filenames)
     for fn in filenames:
