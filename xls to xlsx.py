@@ -2,9 +2,9 @@ import os
 import os.path
 import win32com.client as win32
 import openpyxl
-rootdir = r"C:\Users\Admin\Desktop\1"
+rootdir = r"C:\Users\jdbscwmsjs\Desktop\1"
 for parent,dirnames,filenames in os.walk(rootdir):
-    # print(parent,dirnames,filenames)
+    print(parent,dirnames,filenames)
     for fn in filenames:
         # print(parent,dirnames,filenames)
         filedir = os.path.join(parent,fn)
