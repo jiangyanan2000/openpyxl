@@ -3,6 +3,7 @@ import os
 import os.path
 import win32com.client as win32
 import openpyxl
+from win32com.client import Dispatch
 from openpyxl.styles import Alignment
 center_alignment = Alignment(horizontal="center",vertical="center")
 rootdir = input("输入文件夹路径：")
@@ -50,7 +51,37 @@ for parent_new,dirnames_new,filenames_new in os.walk(rootdir):
                 ws[cols[(maxrow - 1)].coordinate].alignment = center_alignment
 
 
+
             # each_row.number_format = "FORMAT_GENERAL"
             # print(each_row.value)
 
         wb.save(filedir_new)
+for parent_new2,dirnames_new2,filenames_new2 in os.walk(rootdir):
+    for fn_new2 in filenames_new:
+        filedir_new1 = os.path.join(parent_new2, fn_new2)
+        xlApp = Dispatch("Excel.Application")
+        xlApp.Visible = False
+        xlBook = xlApp.Workbooks.Open(filedir_new1)
+        xlBook.Save()
+        xlBook.Close()
+
+
+
+
+for parent_new1,dirnames_new1,filenames_new1 in os.walk(rootdir):
+    for fn_new1 in filenames_new:
+        filedir_new1 = os.path.join(parent_new1, fn_new1)
+        wb = openpyxl.load_workbook(filedir_new1,data_only=True)
+        ws = wb["支部数据"]
+
+        active_probablity = "C"+str(maxrow+2)
+        # print(activ_probablity)
+        active_student = "D"+str(maxrow+1)
+        activate_student = "K"+str(maxrow+1)
+        # ws[active_probablity] = int(ws[active_student].value)/int(ws[activate_student].value)
+        # print(ws[active_student].value)
+        # print(ws[activate_student].value)
+        s = int(ws[active_student].value)/int(ws[activate_student].value)
+        ws[active_probablity].value = s
+        # print(ws[active_probablity])
+        wb.save(filedir_new1)
