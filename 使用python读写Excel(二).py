@@ -19,12 +19,12 @@ ws = test.active
 # test.save(r"C:\Users\Admin\Desktop\通信录.xlsx")
 
 
-# c = ws["A1"]
-# print(c.row)
-# print(c.column)
-# print(c.value)
-# d = c.offset(0,2)
-# print(d.value)
+c = ws["A1"]
+print(c.row)
+print(c.column)
+print(c.value)
+d = c.offset(0,2)
+print(d.value)
 
 # print(openpyxl.utils.get_column_letter(496))
 # print(openpyxl.utils.column_index_from_string("jb"))

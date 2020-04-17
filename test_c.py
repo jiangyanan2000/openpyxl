@@ -53,7 +53,7 @@ for files1 in s1:
         for cols in ws.iter_cols(min_col=3,min_row=2,max_col=11,max_row = (maxrow+1)):
             # print(cols)
             ws[cols[(maxrow-1)].coordinate] = f"=SUM({cols[0].coordinate}:{cols[(maxrow-2)].coordinate})"
-            ws[cols[(maxrow - 1)].coordinate].alignment = center_alignment
+            ws[cols[(maxrow-1)].coordinate].alignment = center_alignment
         wb.save(files1)
 
 s3 = get_file_name(rootdir)
@@ -75,10 +75,14 @@ for files4 in s4:
     # print(activ_probablity)
     active_student = "D"+str(maxrow+1)
     activate_student = "K"+str(maxrow+1)
+    per_score = "C"+str(maxrow+3)
+    total_score = "I"+str(maxrow+1)
     # ws[active_probablity] = int(ws[active_student].value)/int(ws[activate_student].value)
     # print(ws[active_student].value)
     # print(ws[activate_student].value)
     s = int(ws[active_student].value)/int(ws[activate_student].value)
+    s1 = int(ws[total_score].value)/int(ws[activate_student].value)
+    ws[per_score].value = s1
     ws[active_probablity].value = s
     # print(ws[active_probablity])
     wb.save(files4)
@@ -88,54 +92,116 @@ s5 = get_file_name(rootdir)
 # print(s5)
 # print(type(s5))
 for files5 in s5:
-    print(files5)
-    d = os.path.basename(files5).split(".")[0]
+    # print(files5)
+    community_name = os.path.basename(files5).split(".")[0]
     wb = load_workbook(files5)
     ws = wb["支部数据"]
     maxrow = ws.max_row
-    total = "C"+str(maxrow-1)
-    activate_student = "D"+str(maxrow-1)
-    active_probablity = "C"+str(maxrow)
+    total = "C"+str(maxrow-2)
+    activate_student = "D"+str(maxrow-2)
+    active_probablity = "C"+str(maxrow-1)
+    per_score = "C"+str(maxrow)
 
-    print(maxrow)
-    if d == "大麻湾社区":
+    # print(maxrow)
+    if community_name == "大麻湾社区":
         ws_collect["C3"] = ws[total].value
         ws_collect["G3"] = ws[activate_student].value
         ws_collect["L3"] = ws[active_probablity].value
-    elif d == "爱国庄社区":
+        ws_collect["N3"] = ws[per_score].value
+    elif community_name == "爱国庄社区":
         ws_collect["C4"] = ws[total].value
         ws_collect["G4"] = ws[activate_student].value
         ws_collect["L4"] = ws[active_probablity].value
-    elif d == "于家村社区":
+        ws_collect["N4"] = ws[per_score].value
+    elif community_name == "于家村社区":
         ws_collect["C5"] = ws[total].value
         ws_collect["G5"] = ws[activate_student].value
         ws_collect["L5"] = ws[active_probablity].value
-    elif d == "大店社区":
+        ws_collect["N5"] = ws[per_score].value
+    elif community_name == "大店社区":
         ws_collect["C6"] = ws[total].value
         ws_collect["G6"] = ws[activate_student].value
         ws_collect["L6"] = ws[active_probablity].value
-    elif d == "南庄社区":
+        ws_collect["N6"] = ws[per_score].value
+    elif community_name == "南庄社区":
         ws_collect["C7"] = ws[total].value
         ws_collect["G7"] = ws[activate_student].value
         ws_collect["L7"] = ws[active_probablity].value
-    elif d == "韩家社区":
+        ws_collect["N7"] = ws[per_score].value
+    elif community_name == "韩家社区":
         ws_collect["C8"] = ws[total].value
         ws_collect["G8"] = ws[activate_student].value
         ws_collect["L8"] = ws[active_probablity].value
-    elif d == "东小屯社区":
+        ws_collect["N8"] = ws[per_score].value
+    elif community_name == "东小屯社区":
         ws_collect["C9"] = ws[total].value
         ws_collect["G9"] = ws[activate_student].value
         ws_collect["L9"] = ws[active_probablity].value
-    elif d == "大寨社区":
+        ws_collect["N9"] = ws[per_score].value
+    elif community_name == "大寨社区":
         ws_collect["C10"] = ws[total].value
         ws_collect["G10"] = ws[activate_student].value
         ws_collect["L10"] = ws[active_probablity].value
-    elif d == "和平社区":
+        ws_collect["N10"] = ws[per_score].value
+    elif community_name == "和平社区":
         ws_collect["C11"] = ws[total].value
         ws_collect["G11"] = ws[activate_student].value
         ws_collect["L11"] = ws[active_probablity].value
+        ws_collect["N11"] = ws[per_score].value
     wb.close()
 wb_collect.save(r"C:\Users\Admin\Desktop\汇总.xlsx")
+
+wb_collect = load_workbook(r"C:\Users\Admin\Desktop\汇总.xlsx")
+ws_collect = wb_collect["各社区汇总表"]
+
+wb_lastweek = load_workbook(r"C:\Users\Admin\Desktop\lastweek.xlsx")
+ws_lastweek = wb_lastweek["各社区汇总表"]
+for rows in ws_lastweek["B3":"C11"]:
+    # print(rows)
+    community_name = rows[0].value
+    last_week_num = rows[1].value
+    print(community_name)
+    print(rows[1].value)
+    if community_name == "大麻湾社区":
+        ws_collect["H3"] = last_week_num
+    elif community_name == "爱国庄社区":
+        ws_collect["H4"] = last_week_num
+
+    elif community_name == "于家村社区":
+        ws_collect["H5"] = last_week_num
+
+    elif community_name == "大店社区":
+        ws_collect["H6"] = last_week_num
+
+    elif community_name == "南庄社区":
+        ws_collect["H7"] = last_week_num
+
+    elif community_name == "韩家社区":
+        ws_collect["H8"] = last_week_num
+
+    elif community_name == "东小屯社区":
+        ws_collect["H9"] = last_week_num
+
+    elif community_name == "大寨社区":
+        ws_collect["H10"] = last_week_num
+
+    elif community_name == "和平社区":
+        ws_collect["H11"] = last_week_num
+    wb_lastweek.close()
+wb_collect.save(r"C:\Users\Admin\Desktop\汇总.xlsx")
+
+wb_collect = load_workbook(r"C:\Users\Admin\Desktop\汇总.xlsx")
+ws_collect = wb_collect["各社区汇总表"]
+
+for rows in ws_collect["C3":"J11"]:
+    rows[7].value = rows[0].value - rows[5].value
+wb_collect.save(r"C:\Users\Admin\Desktop\汇总.xlsx")
+
+
+
+
+
+
 
 
 
